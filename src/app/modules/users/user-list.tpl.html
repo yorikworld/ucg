@@ -1,0 +1,28 @@
+<div class="holder">
+    <div class="container">
+        <div class="actions">
+            <button class="actions-create-btn" ng-click="createUserAction()">Create User</button>
+        </div>
+        <div class="table">
+            <div class="table-header">
+                <div class="table-header-item">User Name</div>
+                <div class="table-header-item">First Name</div>
+                <div class="table-header-item">Last Name</div>
+                <div class="table-header-item">Email</div>
+                <div class="table-header-item">Type</div>
+            </div>
+            <div class="table-content">
+                <a href="#!/users/{{user.id}}" class="table-content-row" ng-repeat="user in userList" ng-click="selectUser(user)">
+                    <div class="table-content-row-data">{{ user.userName }}</div>
+                    <div class="table-content-row-data">{{ user.firstName }}</div>
+                    <div class="table-content-row-data">{{ user.lastName }}</div>
+                    <div class="table-content-row-data">{{ user.email }}</div>
+                    <div class="table-content-row-data">{{ user.userType }}</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="user-holder">
+        <user ng-if="selectedUser" list="userList" user="selectedUser" on-delete="deleteUser" on-save="saveUser"></user>
+    </div>
+</div>

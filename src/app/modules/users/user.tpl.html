@@ -1,0 +1,65 @@
+    <div ng-if="user" class="user-container">
+        <div class="user">
+            <div class="user-header">
+                <span class="user-header-title">{{ title }}</span>
+                <span class="user-header-close" ng-click="closeComponent()"></span>
+            </div>
+            <div class="user-content">
+                <form name="form" novalidate>
+                <label for="user-name">User Name*<input id="user-name" type="text" ng-model="user.userName" unique required name="userName"></label>
+                    <div ng-show="form.$submitted || form.userName.$touched" class="user-content-error">
+                        <div ng-show="form.userName.$error.userNameUnique">User Name already exist</div>
+                        <div ng-show="form.userName.$error.required">Field is required</div>
+                    </div>
+                <label for="first-name">First Name*<input id="first-name" type="text" ng-model="user.firstName" required name="firstName"></label>
+                    <div ng-show="form.$submitted || form.firstName.$touched" class="user-content-error">
+                        <div ng-show="form.firstName.$error.required">Field is required</div>
+                    </div>
+                <label for="last-name">Last Name*<input id="last-name" type="text" ng-model="user.lastName" required name="lastName"></label>
+                    <div ng-show="form.$submitted || form.lastName.$touched" class="user-content-error">
+                        <div ng-show="form.lastName.$error.required">Field is required</div>
+                    </div>
+                <label for="email">Email*<input id="email" type="text" ng-model="user.email" email required name="email"></label>
+                    <div ng-show="form.$submitted || form.password.$touched" class="user-content-error">
+                        <div ng-show="form.email.$error.required">Field is required</div>
+                        <div ng-show="form.email.$error.email">Email is invalid</div>
+                    </div>
+                <label for="type">Type*<select id="type" ng-model="user.userType">
+                    <option>Admin</option>
+                    <option>Driver</option>
+                </select></label>
+                <label for="password">Password*
+                    <input id="password" type="password" ng-model="user.password" password required name="password"></label>
+                    <div ng-show="form.$submitted || form.password.$touched" class="user-content-error">
+                        <div ng-show="form.password.$error.required">Field is required</div>
+                        <div ng-show="form.password.$error.checkPassword">Should contain one number and one letter</div>
+                    </div>
+                <label for="password-confirm">Repeat Password*
+                    <input id="password-confirm" type="password" ng-model="user.passwordConfirm" required name="passwordConfirm"></label>
+                    <div ng-show="form.$submitted || form.passwordConfirm.$touched" class="user-content-error">
+                        <div ng-show="form.passwordConfirm.$error.required">Field is required</div>
+                        <div ng-show="form.password.$modelValue !== form.passwordConfirm.$modelValue">Password mismatch</div>
+                    </div>
+                <div class="user-content-footer" ng-class="{'space-between': !user.isNewUser}">
+                    <div class="user-content-footer-create" ng-if="user.isNewUser">
+                        <button
+                            class="user-content-footer-create-btn btn"
+                            ng-click="createUser(user, form.$valid)">Create</button>
+                    </div>
+                    <div class="user-content-footer-delete-btn" ng-if="!user.isNewUser">
+                        <button
+                            class="user-content-footer-delete-btn btn"
+                            ng-click="deleteUser()">Delete</button>
+                    </div>
+                    <div class="user-content-footer-save-btn" ng-if="!user.isNewUser">
+                        <button
+                            value="Save"
+                            type="submit"
+                            class="user-content-footer-save-btn btn"
+                            ng-click="saveUser(user, form.$valid)">Save</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>

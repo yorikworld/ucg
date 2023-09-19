@@ -1,0 +1,38 @@
+[
+    {
+        "userName": "John",
+        "firstName": "Dou",
+        "lastName": "asd",
+        "email": "",
+        "password": "",
+        "userType": "Admin",
+        "isNewUser": false
+    },
+    {
+        "userName": "John2",
+        "firstName": "Dou2",
+        "lastName": "",
+        "email": "",
+        "password": "",
+        "userType": "Driver",
+        "isNewUser": false
+    },
+    {
+        "userName": "John3",
+        "firstName": "Dou3",
+        "lastName": "",
+        "email": "",
+        "password": "",
+        "userType": "Driver",
+        "isNewUser": false
+    },
+    {
+        "userName": "John4",
+        "firstName": "Dou4",
+        "lastName": "",
+        "email": "",
+        "password": "",
+        "userType": "Driver",
+        "isNewUser": false
+    }
+]

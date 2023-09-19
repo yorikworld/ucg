@@ -1,4 +1,4 @@
-function UserController($scope) {
+function UserController($scope, $location) {
     $scope.user = null;
     $scope.originalUser = null;
     $scope.title = 'Create new user';
@@ -15,15 +15,14 @@ function UserController($scope) {
         if(user && isValid) {
             $scope.$parent.createUser(user);
         }
-
     };
 
     $scope.deleteUser = function () {
         $scope.$parent.deleteUser($scope.user);
+        $location.path('#!/users');
     };
 
     $scope.saveUser = function (user, isValid) {
-        console.log('saveUser user', user, isValid);
         if (isValid) {
             $scope.$parent.saveUser({
                 user: user,
@@ -33,8 +32,8 @@ function UserController($scope) {
     };
 
     $scope.closeComponent = function () {
-        $location.path('/users');
         $scope.user = null;
+        $location.path('#!/users');
     };
 }
 angular.module('userModule', [])

@@ -1,6 +1,6 @@
 function AppController($scope) {}
 function PageNotFound($scope) {}
-angular.module('app', ['templates.app', 'userModule', 'userListModule'])
+angular.module('app', ['templates.app', 'ngRoute', 'userModule', 'userListModule'])
     .config(function($routeProvider) {
         $routeProvider.when('/',
             {
@@ -26,52 +26,25 @@ angular.module('app', ['templates.app', 'userModule', 'userListModule'])
         templateUrl: 'app.tpl.html',
         controller: AppController
     })
-    .factory('Http', function () {
+    .controller('PageNotFound', ['$scope', PageNotFound])
+    .factory('Http', ['$http', function (http) {
         return {
-            userListResponse: [
-                {
-                    userName: 'John',
-                    firstName: 'Dou',
-                    lastName: 'asd',
-                    email: '',
-                    password: '',
-                    userType: 'Admin',
-                    isNewUser: false
-                },
-                {
-                    userName: 'John2',
-                    firstName: 'Dou2',
-                    lastName: '',
-                    email: '',
-                    password: '',
-                    userType: 'Driver',
-                    isNewUser: false
-                },
-                {
-                    userName: 'John3',
-                    firstName: 'Dou3',
-                    lastName: '',
-                    email: '',
-                    password: '',
-                    userType: 'Driver',
-                    isNewUser: false
-                },
-                {
-                    userName: 'John4',
-                    firstName: 'Dou4',
-                    lastName: '',
-                    email: '',
-                    password: '',
-                    userType: 'Driver',
-                    isNewUser: false
-                }
-            ].map((item,i) => {
-                return Object.assign({ id: i+1 }, item);
-            })
+            getUsers: function () {
+                return http({
+                    method: 'GET',
+                    url: '/assets/http/users.json'
+                })
+                    .then(function (res) {
+                        return {
+                            ...res,
+                            data: res.data.map((item,i) => Object.assign({ id: i+1 }, item))
+                        }
+                    })
+            }
         };
-})
+    }])
     .directive('password', function() {
-        var PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+        const PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
         return {
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl) {
@@ -88,7 +61,7 @@ angular.module('app', ['templates.app', 'userModule', 'userListModule'])
         };
     })
     .directive('email', function() {
-        var EMAIL_REGEXP = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const EMAIL_REGEXP = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return {
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl) {
@@ -105,7 +78,7 @@ angular.module('app', ['templates.app', 'userModule', 'userListModule'])
         return {
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl) {
-                ctrl.$validators.userNameUnique = function(modelValue, viewValue) {
+                ctrl.$validators.userNameUnique = function(modelValue) {
                     if (ctrl.$isEmpty(modelValue)) {
                         return true;
                     }

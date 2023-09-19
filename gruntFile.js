@@ -9,7 +9,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-recess');
     grunt.loadNpmTasks('grunt-html2js');
-    grunt.loadNpmTasks('grunt-iife');
 
 
     grunt.registerTask('default', ['jshint','build']);

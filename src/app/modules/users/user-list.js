@@ -1,5 +1,9 @@
-function UserListController($scope, Http, $attrs) {
-    $scope.userList = Http.userListResponse;
+function UserListController($scope, Http, $location) {
+    $scope.userList = [];
+    Http.getUsers()
+        .then(function (response) {
+            $scope.userList = response.data;
+        })
     $scope.selectedUser = null;
     $scope.selectUser = function (user) {
         $scope.selectedUser = Object.assign({}, user);
@@ -16,6 +20,7 @@ function UserListController($scope, Http, $attrs) {
             userType: 'Driver',
             isNewUser: true
         };
+        $location.path('#!/users');
     };
     $scope.createUser = function (user) {
         user.isNewUser = false;
@@ -32,10 +37,9 @@ function UserListController($scope, Http, $attrs) {
         const index = $scope.userList.findIndex((item) => {
             return item.id === userObj.user.id; });
         $scope.userList[index]=userObj.user;
-        console.log('saveUser userList', userObj, index,$scope.userList);
     };
 }
-angular.module('userListModule', ['ngRoute'])
+angular.module('userListModule', [])
     .component('userList', {
         templateUrl: 'modules/users/user-list.tpl.html',
         controller: UserListController
